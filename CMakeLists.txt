@@ -14,6 +14,7 @@ set(CORE_INCLUDE_DIR
 
 subdirs(
    core
+   frontend
    #3rdparty
    #terps
    tests
