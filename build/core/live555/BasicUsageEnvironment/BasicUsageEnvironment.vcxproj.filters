@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\core\live555\BasicUsageEnvironment\BasicHashTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\core\live555\BasicUsageEnvironment\BasicTaskScheduler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\core\live555\BasicUsageEnvironment\BasicTaskScheduler0.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\core\live555\BasicUsageEnvironment\BasicUsageEnvironment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\core\live555\BasicUsageEnvironment\BasicUsageEnvironment0.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\core\live555\BasicUsageEnvironment\DelayQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\Projects\TextGames\TadsTerp\skif\core\live555\BasicUsageEnvironment\include\BasicHashTable.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Projects\TextGames\TadsTerp\skif\core\live555\BasicUsageEnvironment\include\BasicUsageEnvironment.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Projects\TextGames\TadsTerp\skif\core\live555\BasicUsageEnvironment\include\BasicUsageEnvironment0.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Projects\TextGames\TadsTerp\skif\core\live555\BasicUsageEnvironment\include\BasicUsageEnvironment_version.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Projects\TextGames\TadsTerp\skif\core\live555\BasicUsageEnvironment\include\DelayQueue.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Projects\TextGames\TadsTerp\skif\core\live555\BasicUsageEnvironment\include\HandlerSet.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\Projects\TextGames\TadsTerp\skif\core\live555\BasicUsageEnvironment\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{08FA5B3E-BEAE-3F89-98D8-EBE587807AAF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{97472659-31CC-3E30-AAAF-E98382E3924F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

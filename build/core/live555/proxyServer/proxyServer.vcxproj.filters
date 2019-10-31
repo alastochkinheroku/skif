@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\core\live555\proxyServer\live555ProxyServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\Projects\TextGames\TadsTerp\skif\core\live555\proxyServer\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{97472659-31CC-3E30-AAAF-E98382E3924F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

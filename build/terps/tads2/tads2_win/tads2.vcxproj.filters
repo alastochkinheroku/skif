@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\argize.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\ler.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\mcm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\mcs.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\mch.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\obj.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\cmd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\errmsg.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\fioxor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\oserr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\runstat.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\fio.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\getstr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\cmap.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\askf_os.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\indlg_os.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\osifc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\dat.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\lst.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\run.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\out.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\voc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\bif.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\suprun.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\regex.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\vocab.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\execmd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\ply.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\qas.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\trd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\dbgtr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\linfdum.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\osrestad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\bifgdum.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\output.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\osstzprs.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\osnoui.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\msdos\ostzw32.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\msdos\os0tr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\Projects\TextGames\TadsTerp\skif\terps\tads2\tads2_win\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{97472659-31CC-3E30-AAAF-E98382E3924F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
