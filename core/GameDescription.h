@@ -5,6 +5,9 @@
 #include <list>
 #include <map>
 
+namespace core
+{
+
 struct GameDescription
 {
     unsigned int id;
@@ -16,5 +19,7 @@ struct GameDescription
 
 typedef std::list<GameDescription> GameList;
 typedef std::map<std::string/*engine*/, GameList/*games*/ > EngineGameList;
+
+}
 
 #endif

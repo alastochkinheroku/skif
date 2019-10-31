@@ -4,6 +4,9 @@
 #include <string>
 #include <list>
 
+namespace core
+{
+
 enum SettingType
 {
     SettingType_Int,
@@ -12,14 +15,24 @@ enum SettingType
     SettingType_Bool,
 };
 
-struct SettingsElement
+//Описатель настроек
+struct SettingsDesc
 {
     std::string name;
-    std::string currentValue;
     std::string defaultValue;
     SettingType type;
 };
 
-typedef std::list<SettingsElement> SettingsList;
+//Описатель настроек
+struct SettingsElement
+{
+	std::string name;
+	std::string currentValue;
+};
+
+typedef std::list<SettingsDesc> SettingsDescList;
+typedef std::list<SettingsElement> SettingsElementList;
+
+}
 
 #endif
