@@ -1,0 +1,169 @@
+@startuml
+Title Ядро SKIF. Обработка состояний и команд
+
+enum EngineStateMode {
+  MODE_MAIN_TEXT
+  MODE_SUB_WINDOW_TEXT
+  MODE_METADATA
+  MODE_CHOICES
+  MODE_WAITED_ACTION
+}
+
+class EngineState {
+  + {abstract} ID():EngineStateMode
+}
+
+class EngineStateText {
+  + EngineStateText(text:string)
+  + ID():EngineStateMode{return MODE_TEXT}
+  + text():string
+}
+
+
+enum EngineCommandType {
+  CMD_NONE
+  CMD_STRING
+  CMD_CHAR
+  CMD_SINGLE_CHOICE
+  CMD_MULTY_CHOICE
+}
+
+class EngineCommand {
+  + {abstract} ID():EngineCommandType
+}
+
+class EngineCommandString {
+  + EngineCommandString (text:string)
+  + ID():EngineStateMode{return CMD_STRING}
+  + value():string
+}
+
+
+abstract IEngineService {
+   + {abstract} startGame(name:string)
+   + {abstract} stopGame()
+   + {abstract} haveState():Boolean
+   + {abstract} popState():EngineState
+   + {abstract} pushCommand(cmd: EngineCommand)
+   + {abstract} saveGame(name:string)
+   + {abstract} loadGame(name:string)
+   + {abstract} getCurrentParams():string_json
+   + {abstract} setCurrentParams(params: string_json)
+}
+
+EngineState <|-- EngineStateText
+EngineState --> EngineStateMode
+
+EngineCommand <|-- EngineCommandString 
+EngineCommand --> EngineCommandType 
+
+IEngineService --> EngineState
+IEngineService --> EngineCommand
+@enduml
+
+
+
+
+@startuml
+Title Ядро SKIF. Структура пакетов
+
+package core {
+
+abstract IEngineService {
+  
+}
+
+abstract IStorageProxy {
+  {abstract} localGameList(): []ginfo
+  {abstract} remoteGameList(): []ginfo
+  {abstract} saveGameList(): []sinfo
+  {abstract} download(ID: string)
+  {abstract} gameNameForID(ID: string): string
+  {abstract} saveNameForID(ID: string): string
+}
+
+class EngineController {
+  +registerEngine(engine: IEngineService, proxy: IStorageProxy)
+  +getTotalGameList()
+}
+
+EngineController --> IEngineService 
+EngineController --> IStorageProxy 
+
+}
+
+package gui {
+Impl --> EngineController
+}
+
+package 3rd {
+class RPCAudio
+}
+
+package utils {
+class NetworkManager
+class XMLParser
+}
+
+package engines {
+
+package some_impl {
+  IEngineService <|-- SomeEngineService
+  IStorageProxy <|-- SomeStorageProxy
+  SomeEngineService --> RPCAudio
+  SomeStorageProxy --> NetworkManager
+  SomeStorageProxy --> XMLParser
+}
+}
+@enduml
+
+
+@startuml
+Title Запуск игры. Работа с движком и хранилищем
+
+actor User
+User -> gui: open
+gui -> EngineController: new
+EngineController -> SomeEngineService: new
+EngineController -> SomeStorageProxy: new
+EngineController -> EngineController: registerEngines
+gui -> EngineController: getTotalGameList
+EngineController -> SomeStorageProxy: localGameList
+SomeStorageProxy --> EngineController: list
+EngineController --> gui: map of lists
+gui -> User: Dialog. Table with engines and lists.
+User -> gui: select game no. 1
+gui -> EngineController: startNewGame(engine, game ID=1)
+EngineController -> SomeStorageProxy: gameNameForID(ID=1)
+SomeStorageProxy --> EngineController: name=foo.gam
+EngineController -> SomeEngineService: startNewGame(name=foo.gam)
+EngineController -> gui: ok
+gui -> User: Show main window
+@enduml
+
+@startuml
+Title Отображение текста в начале и обработка команд
+
+actor User
+participant gui
+participant EngineController
+
+gui -> EngineController: haveState()
+EngineController --> gui: true
+gui -> EngineController: popState()
+EngineController --> gui : EngineStateText(text="Once apon a time...")
+gui -> EngineController: haveState()
+EngineController --> gui: true
+gui -> EngineController: popState()
+EngineController --> gui : EngineStateWaitAction(event=PARSER_TEXT)
+gui -> EngineController: haveState()
+EngineController --> gui: false
+gui -> User: Show new text and enable input edit
+User -> gui: input "north"
+gui -> EngineController: pushCommand(new EngineCommandString(text="north"))
+note over EngineController: Some time later
+gui -> EngineController: haveState()
+EngineController --> gui: true
+gui -> EngineController: popState()
+EngineController-> gui : EngineStateText(text="and then...")
+@enduml
