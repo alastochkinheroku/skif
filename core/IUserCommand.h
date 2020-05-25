@@ -1,6 +1,8 @@
 #ifndef __I_USER_COMMAND__
 #define __I_USER_COMMAND__
 
+#include <string>
+
 namespace core
 {
 

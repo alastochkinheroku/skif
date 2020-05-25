@@ -2,6 +2,7 @@
 #define __ENGINE_MANAGER__
 
 #include "ITextGameEngine.h"
+#include "IGameManager.h"
 #include <memory>
 #include <map>
 
@@ -14,7 +15,9 @@ public:
    EngineManager();
    void registerEngine(
         std::string engineName,
-        std::shared_ptr<ITextGameEngine> engine);
+        std::shared_ptr<ITextGameEngine> engine,
+	   std::shared_ptr<IGameManager> manager
+	   );
    void initAllEngines();
    EngineGameList getAllGames() const;
    void startNewGame(std::string engineName, unsigned int game_id);
