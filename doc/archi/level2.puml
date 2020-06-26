@@ -1,0 +1,18 @@
+@startuml
+!include C4_Container.iuml
+title Уровень 2. Контейнеры \n [[level1.html <&arrow-top> Уровень 1]]
+Person(user, "Пользователь")
+System_Boundary(c1, "LidarGeoLogger") {
+    Container(app, "Настольное приложение", "Qt", "Позволяет записывать данные с лидара и систем навигации с синхронизацией по времени.") [[level3.html]]
+}
+System(filesystem, "Файловая система")
+System(dev1, "Устройство типа лидара")
+System(dev2, "Устройство с данными об ориентации")
+System(dev3, "Устройство с данными о геопозиции")
+
+Rel(user, app, "Использует", "GUI")
+Rel(app, filesystem, "Записывает лог", "каталог")
+Rel(dev1, app, "Отправляет", "3D-облако точек")
+Rel(dev2, app, "Отправляет", "крен, курс, тангаж")
+Rel(dev3, app, "Отправляет", "широта, долгота, высота")
+@enduml

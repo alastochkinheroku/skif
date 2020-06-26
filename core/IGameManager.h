@@ -5,9 +5,9 @@
 #include "GameDescription.h"
 #include "SettingsElement.h"
 #include <memory>
-#include <experimental/filesystem>
+#include <filesystem>
 
-namespace fs = std::experimental::filesystem;
+namespace fs = std::filesystem;
 
 namespace core
 {

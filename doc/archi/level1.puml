@@ -1,0 +1,12 @@
+@startuml
+!include C4_Context.iuml
+title Уровень 1. Контекст
+Person(user, "Пользователь")
+System(app, "Skif", "Плеер ИЛ")[[level2.html]]
+System(filesystem, "Локальное хранилище игр")
+System(netstorage, "Удаленныое хранилище")
+
+Rel(user, app, "Использует", "UI")
+Rel(app, filesystem, "Чтение", "json desc")
+Rel(app, filesystem, "Чтение", "remote desc")
+@enduml
