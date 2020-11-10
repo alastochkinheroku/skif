@@ -1,0 +1,22 @@
+@startuml
+title Main package \n [[level3.html <&arrow-top> Уровень 3]]
+package "Core" {
+LoggerModel --> IDataProvider
+LoggerModel --> ILogWriter
+}
+package "dataproviders" {
+}
+package "logwriters" {
+}
+package "widgets" {
+   class FormConfigStub
+}
+package "main" {
+   dataproviders <-- MainWindow
+   logwriters <-- MainWindow
+   FormConfigStub <-- MainWindow
+   LoggerModel <-- MainWindow
+   IDataProvider <-- MainWindow
+   ILogWriter <-- MainWindow
+}
+@enduml

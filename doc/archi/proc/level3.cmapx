@@ -1,0 +1,6 @@
+<map id="level3_map" name="level3_map">
+<area shape="rect" id="id1" href="level2.html" title="level2.html" alt="" coords="494,20,585,42"/>
+<area shape="rect" id="id2" href="main.html" title="main.html" alt="" coords="331,261,533,384"/>
+<area shape="rect" id="id3" href="providers.html" title="providers.html" alt="" coords="665,492,865,651"/>
+<area shape="rect" id="id4" href="core.html" title="core.html" alt="" coords="183,743,372,919"/>
+</map>

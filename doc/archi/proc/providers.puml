@@ -1,0 +1,18 @@
+@startuml
+title Providers package \n [[level3.html <&arrow-top> Уровень 3]]
+skinparam linestyle ortho
+rectangle "датчик" as sens
+rectangle "provider" as prov
+rectangle "LogerModel" as lm
+rectangle "LogWriter" as lw
+rectangle "Filesystem" as fs
+rectangle "widget" as wg
+rectangle "Central widget" as cwg
+
+sens --> prov: 1.Асинхронная посылка (внутренний слот)
+prov --> lm: 2.Qt сообщение со стандартными данными
+prov --> wg: 2.1 Qt сообщение с сырыми данными
+lm --> lw: 3. Вызов метода при приёме 3d-облака
+lm --> cwg: 3.1 Qt сообщение с отправкой статистики
+lw --> fs: 4. Запись в файловую систему
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+!include C4_Component.iuml
+title Уровень 3. Компоненты \n [[level2.html <&arrow-top> Уровень 2]]
+Container_Boundary(app, "LidarGeoLogger") {
+    Component(core, "core", "Ядро модели", "Представляет классы интерфейсов для записи данных(провайдеры), ведения файла лога и координатора записи.")[[core.html]]
+    Component(widgets, "widgets", "Qt-классы виджетов", "Представляют содержимое док-панелей, настраивают провайдеры.")
+    Component(dataproviders, "dataproviders", "Реализация провайдеров", "Реализуют интерфейс подключения, настройки и обмена данными с устройством")[[providers.html]]
+    Component(logwriters, "logwriters", "Реализация записи лога", "Реализует приём данных от устройств и запись в указанный каталог")
+    Component(main, "main", "Главное окно", "Создаёт все связи, хранит координатора")[[main.html]]
+
+    Rel(dataproviders, core, "Реализация")
+    Rel(dataproviders, p3, "Использует")
+    Rel(logwriters, core, "Реализация")
+    Rel(main, widgets, "Использует")
+    Rel(main, core, "Использует")
+    Rel(main, dataproviders, "Использует")
+    Rel(main, logwriters, "Использует")
+}
+Person(user, "Пользователь")
+Rel(user, main, "Использует", "GUI")
+System(filesystem, "Файловая система")
+System(dev, "Устройство")
+
+Rel(logwriters, filesystem, "Записывает лог", "каталог")
+Rel(dev, dataproviders, "Отправляет", "Данные (3D,ориентация,позиция)")
+@enduml

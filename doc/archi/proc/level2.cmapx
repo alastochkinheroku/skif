@@ -1,0 +1,4 @@
+<map id="level2_map" name="level2_map">
+<area shape="rect" id="id1" href="level1.html" title="level1.html" alt="" coords="407,20,498,42"/>
+<area shape="rect" id="id2" href="level3.html" title="level3.html" alt="" coords="303,296,519,475"/>
+</map>
