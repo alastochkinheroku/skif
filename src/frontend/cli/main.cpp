@@ -5,6 +5,7 @@
 
 #include "../../terps/echo/EchoEngine.h"
 #include "../../terps/tads2/Tads2Engine.h"
+#include "../../sound/bass/BassSoundPlayer.h"
 #include <cassert>
 
 //ֻמדדונ גûהאקט ג stderr
@@ -39,6 +40,9 @@ public:
 class CliNotifier : public core::IUserOutputNotifier
 {
 public:
+	CliNotifier(): _psound(true), _init_bass(false) {
+
+	}
 	void notify(std::string text)
 	{
 		std::cout << text;
@@ -50,10 +54,16 @@ public:
 	}
 
 	core::ISoundPlayer* sound() {
+		if (!_init_bass) {
+			_psound.init();
+			_init_bass = true;
+		}
 		return &_psound;
 	}
 private:
-	PrintedSoundPlayer _psound;
+	//PrintedSoundPlayer _psound;
+	BassSoundPlayer _psound;
+	bool _init_bass;
 };
 
 int main(int argc, char *argv[])

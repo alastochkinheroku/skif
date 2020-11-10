@@ -22,9 +22,13 @@ endif()
 set(CORE_INCLUDE_DIR 
     ${PROJECT_SOURCE_DIR}/core)
 
+set(BASS_WIN_LINK_DIR 
+    ${PROJECT_SOURCE_DIR}/sound/bass/win_lib)
+
 subdirs(
    core
    frontend
    terps
+   sound
    tests
 )
