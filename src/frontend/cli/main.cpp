@@ -43,6 +43,12 @@ public:
 	CliNotifier(): _psound(true), _init_bass(false) {
 
 	}
+
+	void clearOutput()
+	{
+
+	}
+
 	void notify(std::string text)
 	{
 		std::cout << text;

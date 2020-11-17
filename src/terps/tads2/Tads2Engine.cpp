@@ -7,6 +7,7 @@
 static std::shared_ptr<core::IUserOutputNotifier> g_tads_notifier = nullptr;
 static bool g_have_input = false; //признак наличия ввода от пользователя
 static std::string g_curr_input = ""; //текущий ввод
+static bool g_stop_game = false; //признак остановки игры
 
 extern "C" {
 	#include "os.h"
@@ -55,9 +56,14 @@ extern "C" {
 			g_tads_notifier->waitInput();
 		}
 
-		while (!g_have_input)
+		while (!g_have_input && !g_stop_game)
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(10));
+			if (g_stop_game) {
+				//force exit
+				g_curr_input = "$$ABEND";
+				break;
+			}
 		}
 
 		//char* out_buf = new char[g_curr_input.size()];
@@ -114,7 +120,7 @@ void Tads2Engine::startGame(std::string file)
 	//_argv[_argc - 1] = file.c_str();
 
 	//os_plain();
-
+	g_stop_game = false;
 	_playing = true;
 	startThread();
 }
@@ -131,10 +137,13 @@ void Tads2Engine::loadGame(std::string name)
 
 void Tads2Engine::stopGame()
 {
-	if (!_playing) throw core::DomainException("Game not running!");
-	core::GLogger::get() << "Stop playing current file.";
-	_playing = false;
-	joinThread();
+	if (_playing)
+	{
+		core::GLogger::get() << "Stop playing current file.";
+		_playing = false;
+		g_stop_game = true;
+		joinThread();
+	}
 }
 
 bool Tads2Engine::isPlaying() const
@@ -145,6 +154,7 @@ bool Tads2Engine::isPlaying() const
 void Tads2Engine::processUserInput(core::UserCommandType cmd_type, std::string data)
 {
 	//_notifier->notify(std::string("come: ")+data);
+	_notifier->clearOutput();
 	g_curr_input = data;
 	g_have_input = true;
 }

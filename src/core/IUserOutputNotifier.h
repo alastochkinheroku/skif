@@ -19,6 +19,7 @@ namespace core
     class IUserOutputNotifier
     {
     public:
+        virtual void clearOutput() = 0;//очистить экран
         virtual void notify(std::string text) = 0; //уведомить об изменении экрана
         virtual void waitInput() = 0; //ожидание ввода
         virtual ISoundPlayer* sound() = 0;         //доступ к звуковому проигрывателю
