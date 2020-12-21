@@ -11,9 +11,9 @@ namespace core
 class ILocalFileStorage
 {
 public:
-   virtual bool haveGame(ShortId sid) const = 0;
-   virtual std::string getFilePath(ShortId sid) const = 0; //получить путь к игре по ShortId
-   virtual bool installFromRemote(ShortId sid, std::string fullPath) = 0; //распаковать и установить игру, скачанную из удаленного репозитория
+    virtual bool haveGame(ShortId sid) const = 0;
+    virtual std::string getFilePath(ShortId sid) const = 0; //получить путь к игре по ShortId
+    virtual void installFromRemote(ShortId sid, std::string fullDownloadPath) = 0; //распаковать и установить игру, скачанную из удаленного репозитория
 };
 
 }

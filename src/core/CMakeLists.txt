@@ -10,13 +10,17 @@ set(HEADERS
   IUserOutputNotifier.h
   DomainException.h
   GLogger.h
-  IRepositoryProvider.h
+  ILocalFileStorage.h
+  RepositoryProvider.h
+  IConfigParser.h
+  IOSLayer.h
 )
     
 set(SOURCES
   EngineManager.cpp
   GLogger.cpp
   TextGameEngine.cpp
+  RepositoryProvider.cpp
 )
 
 add_library(${PROJECT_NAME} STATIC ${HEADERS} ${SOURCES})
