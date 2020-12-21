@@ -3,4 +3,4 @@
 *.dll
 *.png
 /build
-!/bin/*
+!bin/**
