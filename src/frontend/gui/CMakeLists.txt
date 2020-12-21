@@ -30,3 +30,9 @@ ${BASS_WIN_LINK_DIR}/bassmidi.lib
 ${BASS_WIN_LINK_DIR}/bassmix.lib
 ${BASS_WIN_LINK_DIR}/bassenc.lib
 ${BASS_WIN_LINK_DIR}/bassenc_ogg.lib)
+
+#копируем DLL в выходной каталог
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${BASS_WIN_DLL_DIR}"
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>)

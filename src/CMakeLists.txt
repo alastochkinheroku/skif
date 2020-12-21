@@ -25,7 +25,11 @@ set(CORE_INCLUDE_DIR
     ${PROJECT_SOURCE_DIR}/core)
 
 set(BASS_WIN_LINK_DIR 
-    ${PROJECT_SOURCE_DIR}/sound/bass/win_lib)
+    ${PROJECT_SOURCE_DIR}/../lib/win32)
+
+set(BASS_WIN_DLL_DIR 
+    ${PROJECT_SOURCE_DIR}/../bin/win32)
+
 
 subdirs(
    core
