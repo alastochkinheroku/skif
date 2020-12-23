@@ -14,6 +14,7 @@ set(HEADERS
   RepositoryProvider.h
   IConfigParser.h
   IOSLayer.h
+  ITolk.h
 )
     
 set(SOURCES

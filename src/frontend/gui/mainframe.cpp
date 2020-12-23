@@ -11,9 +11,14 @@ EVT_MENU(wxID_ABOUT, MainFrame::OnAbout)
 EVT_CLOSE(MainFrame::OnClose)
 wxEND_EVENT_TABLE()
 
-MainFrame::MainFrame(std::shared_ptr<core::TextGameEngine> engine, const wxString& title, const wxPoint& pos, const wxSize& size)
+MainFrame::MainFrame(std::shared_ptr<core::TextGameEngine> engine, 
+    std::shared_ptr<core::ITolk> tolker, 
+    const wxString& title, 
+    const wxPoint& pos, 
+    const wxSize& size)
     : wxFrame(NULL, wxID_ANY, title, pos, size),
-    _engine(engine)
+    _engine(engine),
+    _tolker(tolker)
 {
     wxMenu* menuFile = new wxMenu();
     menuFile->Append(ID_OpenGame, "&Открыть\tCtrl-O");
@@ -36,12 +41,13 @@ MainFrame::MainFrame(std::shared_ptr<core::TextGameEngine> engine, const wxStrin
 
     _frame = new LogFrame(this, wxT("Лог приложения"));
 
-    LogInfo("Приложение создано.");
+    LogInfo("Приложение создано.\n");
+    _tolker->Speak(L"");
 }
 
 void MainFrame::LogInfo(const wxString& data)
 {
-    _frame->AddLog(data + "\n");
+    _frame->AddLog(data);
 }
 
 void MainFrame::OpenGame(std::string name)
@@ -54,12 +60,19 @@ void MainFrame::OpenGame(std::string name)
 void MainFrame::ClearOutText()
 {
     _panel->getOutCtrl()->Clear();
+    if (_tolker->IsSpeaking()) _tolker->Silence();
 }
 
 void MainFrame::DisplayOutText(std::string text)
 {
     //in RELEASE???
-    _panel->getOutCtrl()->AppendText(text.c_str());
+    wxString decoded_string(text.c_str(), wxCSConv(wxT("cp-1251")));
+    _panel->getOutCtrl()->AppendText(decoded_string);
+    if (decoded_string.Trim().size() > 0)
+    {
+        _tolker->Speak(decoded_string.data());
+        //LogInfo("Ok tolk? "+std::to_string(ok) + " :" + decoded_string + "\n");
+    }
 }
 
 void MainFrame::DisplayStatus(std::string text)

@@ -8,4 +8,5 @@ include_directories(
 
 subdirs(
    bass
+   tolk_dll
 )
