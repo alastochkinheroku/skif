@@ -3,7 +3,7 @@
 
 namespace core
 {
-	//Единственный экземпляр логгера
+	//Р•РґРёРЅСЃС‚РІРµРЅРЅС‹Р№ СЌРєР·РµРјРїР»СЏСЂ Р»РѕРіРіРµСЂР°
 	GLogger* GLogger::_currentLogger = 0;
 
 	GLogger& GLogger::get()

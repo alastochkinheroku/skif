@@ -165,3 +165,11 @@ void BassSoundPlayer::stop_sound(int layer)
 		}
 	}
 }
+
+void BassSoundPlayer::stop_all_sound()
+{
+	for (auto n_chan = 0; n_chan < MAX_SND_CH; n_chan++)
+	{
+		stop_sound(n_chan);
+	}
+}

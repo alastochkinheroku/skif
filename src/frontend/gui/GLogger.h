@@ -7,19 +7,19 @@
 
 namespace core
 {
-	//Óğîâíè ëîãèğîâàíèÿ
+	//Ğ£Ñ€Ğ¾Ğ²Ğ½Ğ¸ Ğ»Ğ¾Ğ³Ğ¸Ñ€Ğ¾Ğ²Ğ°Ğ½Ğ¸Ñ
 	enum LOG_LEVEL {
 		LOG_LEVEL_INFO,
 		LOG_LEVEL_ERROR
 	};
 
-	//Âûïîëíÿåò ëîãèğîâàíèå äàííûõ
-	//Ïîäêëàññ äîëæåí ÿâíî óñòàíîâèòü ñåáÿ êàê òåêóùåãî ãëîáàëüíîãî ëîããåğà
-	//Îí îäèí äëÿ âñåõ ñëó÷àåâ ëîãèğîâàíèÿ
+	//Ğ’Ñ‹Ğ¿Ğ¾Ğ»Ğ½ÑĞµÑ‚ Ğ»Ğ¾Ğ³Ğ¸Ñ€Ğ¾Ğ²Ğ°Ğ½Ğ¸Ğµ Ğ´Ğ°Ğ½Ğ½Ñ‹Ñ…
+	//ĞŸĞ¾Ğ´ĞºĞ»Ğ°ÑÑ Ğ´Ğ¾Ğ»Ğ¶ĞµĞ½ ÑĞ²Ğ½Ğ¾ ÑƒÑÑ‚Ğ°Ğ½Ğ¾Ğ²Ğ¸Ñ‚ÑŒ ÑĞµĞ±Ñ ĞºĞ°Ğº Ñ‚ĞµĞºÑƒÑ‰ĞµĞ³Ğ¾ Ğ³Ğ»Ğ¾Ğ±Ğ°Ğ»ÑŒĞ½Ğ¾Ğ³Ğ¾ Ğ»Ğ¾Ğ³Ğ³ĞµÑ€Ğ°
+	//ĞĞ½ Ğ¾Ğ´Ğ¸Ğ½ Ğ´Ğ»Ñ Ğ²ÑĞµÑ… ÑĞ»ÑƒÑ‡Ğ°ĞµĞ² Ğ»Ğ¾Ğ³Ğ¸Ñ€Ğ¾Ğ²Ğ°Ğ½Ğ¸Ñ
 	class GLogger
 	{
 	public:
-		static GLogger& get(); //Ïîëó÷èòü àêòèâíîãî ëîãåğà
+		static GLogger& get(); //ĞŸĞ¾Ğ»ÑƒÑ‡Ğ¸Ñ‚ÑŒ Ğ°ĞºÑ‚Ğ¸Ğ²Ğ½Ğ¾Ğ³Ğ¾ Ğ»Ğ¾Ğ³ĞµÑ€Ğ°
 
 		//Templated operator>> that uses the std::ostream: Everything that has defined 
 		//an operator<< for the std::ostream (Everithing "printable" with std::cout 
@@ -33,9 +33,9 @@ namespace core
 			return *this;
 		}
 
-		virtual void log(std::string info, LOG_LEVEL lvl = LOG_LEVEL_INFO) = 0; //Çàïèñàòü ëîã
+		virtual void log(std::string info, LOG_LEVEL lvl = LOG_LEVEL_INFO) = 0; //Ğ—Ğ°Ğ¿Ğ¸ÑĞ°Ñ‚ÑŒ Ğ»Ğ¾Ğ³
 	protected:
-		//Óñòàíîâèòü òåêóùåãî ëîããåğà
+		//Ğ£ÑÑ‚Ğ°Ğ½Ğ¾Ğ²Ğ¸Ñ‚ÑŒ Ñ‚ĞµĞºÑƒÑ‰ĞµĞ³Ğ¾ Ğ»Ğ¾Ğ³Ğ³ĞµÑ€Ğ°
 		void setCurrentLogger(GLogger* logger);
 	private:
 		static GLogger* _currentLogger;

@@ -6,13 +6,13 @@
 #include "../../sound/tolk_dll/tolk_dll.h"
 #include <regex>
 
-static MainFrame* g_mainFrame = 0;//глобальный указатель на окно для доступа из логгера
+static MainFrame* g_mainFrame = 0;//РіР»РѕР±Р°Р»СЊРЅС‹Р№ СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РѕРєРЅРѕ РґР»СЏ РґРѕСЃС‚СѓРїР° РёР· Р»РѕРіРіРµСЂР°
 
-//Нотификатор для окна приложения
+//РќРѕС‚РёС„РёРєР°С‚РѕСЂ РґР»СЏ РѕРєРЅР° РїСЂРёР»РѕР¶РµРЅРёСЏ
 class GuiNotifier : public core::IUserOutputNotifier
 {
 public:
-	GuiNotifier() : _psound(), _init_bass(false), _next_stat(false) {
+	GuiNotifier(std::shared_ptr<core::ISoundPlayer> psound) : _psound(psound), _init_bass(false), _next_stat(false) {
 	}
 
 	void clearOutput()
@@ -43,67 +43,92 @@ public:
 	}
 
 	core::ISoundPlayer* sound() {
-		if (!_init_bass) {
-			_psound.init();
-			_init_bass = true;
-		}
-		return &_psound;
+		return _psound.get();
 	}
 private:
 	//PrintedSoundPlayer _psound;
-	BassSoundPlayer _psound;
+	std::shared_ptr<core::ISoundPlayer> _psound;
 	bool _init_bass;
 	bool _next_stat;
 };
 
-//Главное приложение
+//Р“Р»Р°РІРЅРѕРµ РїСЂРёР»РѕР¶РµРЅРёРµ
 class App : public wxApp
 {
 	std::shared_ptr<core::ITolk> tolker;
 	std::shared_ptr<core::IUserOutputNotifier> notifier;
 	std::shared_ptr<core::TextGameEngine> tads2_engine;
+	std::shared_ptr<core::ISoundPlayer> sound_player;
+protected:
+	wxLanguage m_lang;  // language specified by user
+	wxLocale m_locale;  // locale we'll be using
 public:
-	//Инициализация главного приложения
     bool OnInit()
 	{
-		//Инициализация нотификаторов и движков
 		tolker = std::shared_ptr<core::ITolk>(new TolkDllWrapper());
-		notifier = std::shared_ptr<core::IUserOutputNotifier>(new GuiNotifier());
+		auto player = new BassSoundPlayer();
+		player->init();
+		sound_player = std::shared_ptr<core::ISoundPlayer>(player);
+		notifier = std::shared_ptr<core::IUserOutputNotifier>(new GuiNotifier(sound_player));
 		tads2_engine = std::shared_ptr<core::TextGameEngine>(new Tads2Engine(notifier));
+
+		//СЏРІРЅР°СЏ СѓСЃС‚Р°РЅРѕРІРєР° СЏР·С‹РєР°
+		m_lang = wxLANGUAGE_RUSSIAN;
+		// don't use wxLOCALE_LOAD_DEFAULT flag so that Init() doesn't return
+		// false just because it failed to load wxstd catalog
+		if (!m_locale.Init(m_lang, wxLOCALE_DONT_LOAD_DEFAULT))
+		{
+			wxLogWarning(_("This language is not supported by the system."));
+
+			// continue nevertheless
+		}
+
+		// normally this wouldn't be necessary as the catalog files would be found
+		// in the default locations, but when the program is not installed the
+		// catalogs are in the build directory where we wouldn't find them by
+		// default
+		wxLocale::AddCatalogLookupPathPrefix(".");
+
+		// Initialize the catalogs we'll be using
+		const wxLanguageInfo* pInfo = wxLocale::GetLanguageInfo(m_lang);
+		if (!m_locale.AddCatalog("skif-gui"))
+		{
+			wxLogError(_("Couldn't find/load the 'skif-gui' catalog for locale '%s'."),
+				pInfo ? pInfo->GetLocaleName() : _("unknown"));
+		}
 
 		bool ok = tolker->Load();
 		std::wstring reader(tolker->DetectScreenReader());
 		std::string reader_str(reader.begin(), reader.end());
-		//bool ok_out = tolker->Speak(L"Привет!");
-		core::GLogger::get() << "Tolk loaded: " << ok << " Detect speech: " << reader_str << "\n";
 
-		//Инициализация главного окна
-		MainFrame* frame = new MainFrame(tads2_engine, tolker, std::string("SKIF ") + SKIF_VER, wxPoint(50, 50), wxSize(450, 340));
+		MainFrame* frame = new MainFrame(tads2_engine, tolker, sound_player, _("SKIF ") + SKIF_VER, wxPoint(50, 50), wxSize(450, 340));
 		g_mainFrame = frame;
 		frame->Show(true);
+		//core::GLogger::get() << "Load translation: " << ok_load;
 
 
 		if (wxTheApp->argc != 2)
 		{
 			frame->ClearOutText();
-			frame->DisplayOutText("Запустите игру с параметром - именем игры.\nНапример: skif-gui game.gam");
+
+			frame->DisplayOutText(_("Open game file."));
 			//frame->OpenGame("cloakofd.gam");
 		}
 		else
 		{
-			frame->OpenGame(wxTheApp->argv[1]);
+			frame->OpenAndRunGame(wxTheApp->argv[1]);
 		}
 		return true;
 	}
 };
 
-//Логгер выдачи во фрейм
+//Р›РѕРіРіРµСЂ РІС‹РґР°С‡Рё РІРѕ С„СЂРµР№Рј
 class FrameLogger : public core::GLogger
 {
 public:
 	FrameLogger()
 	{
-		//Устанавливаем текущий логгер как активный
+		//РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј С‚РµРєСѓС‰РёР№ Р»РѕРіРіРµСЂ РєР°Рє Р°РєС‚РёРІРЅС‹Р№
 		setCurrentLogger(this);
 	}
 	void log(std::string info, core::LOG_LEVEL lvl)
@@ -117,5 +142,5 @@ public:
 static FrameLogger gCerrLogger;
 
 
-//Тут определяется точка входа main
+//РўСѓС‚ РѕРїСЂРµРґРµР»СЏРµС‚СЃСЏ С‚РѕС‡РєР° РІС…РѕРґР° main
 wxIMPLEMENT_APP(App);

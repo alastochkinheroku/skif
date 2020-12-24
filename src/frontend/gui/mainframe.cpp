@@ -1,11 +1,14 @@
 #include "mainframe.h"
+#include <wx/filedlg.h>
+#include <wx/wfstream.h>
 
-//Идентификаторы для команд
+//РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂС‹ РґР»СЏ РєРѕРјР°РЅРґ
 enum { ID_ShowLog = 1, ID_OpenGame };
 
 // clang-format off
 wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
 EVT_MENU(ID_ShowLog, MainFrame::OnShowLog)
+EVT_MENU(ID_OpenGame, MainFrame::OpenGame)
 EVT_MENU(wxID_EXIT, MainFrame::OnExit)
 EVT_MENU(wxID_ABOUT, MainFrame::OnAbout)
 EVT_CLOSE(MainFrame::OnClose)
@@ -13,16 +16,18 @@ wxEND_EVENT_TABLE()
 
 MainFrame::MainFrame(std::shared_ptr<core::TextGameEngine> engine, 
     std::shared_ptr<core::ITolk> tolker, 
+    std::shared_ptr<core::ISoundPlayer> player,
     const wxString& title, 
     const wxPoint& pos, 
     const wxSize& size)
     : wxFrame(NULL, wxID_ANY, title, pos, size),
     _engine(engine),
-    _tolker(tolker)
+    _tolker(tolker),
+    _player(player)
 {
     wxMenu* menuFile = new wxMenu();
-    menuFile->Append(ID_OpenGame, "&Открыть\tCtrl-O");
-    menuFile->Append(ID_ShowLog, "&Лог\tCtrl-L");
+    menuFile->Append(ID_OpenGame, _("&Open\tCtrl-O"));
+    menuFile->Append(ID_ShowLog, _("&Log\tCtrl-L"));
     menuFile->AppendSeparator();
     menuFile->Append(wxID_EXIT);
 
@@ -30,8 +35,8 @@ MainFrame::MainFrame(std::shared_ptr<core::TextGameEngine> engine,
     menuHelp->Append(wxID_ABOUT);
 
     wxMenuBar* menuBar = new wxMenuBar();
-    menuBar->Append(menuFile, "&Файл");
-    menuBar->Append(menuHelp, "&Помощь");
+    menuBar->Append(menuFile, _("&File"));
+    menuBar->Append(menuHelp, _("&Help"));
 
     SetMenuBar(menuBar);
     CreateStatusBar();
@@ -39,9 +44,9 @@ MainFrame::MainFrame(std::shared_ptr<core::TextGameEngine> engine,
     _panel = new CentralPanel(engine, this, 10, 10, 600, 600);
     _panel->GetSizer()->Fit(this);
 
-    _frame = new LogFrame(this, wxT("Лог приложения"));
+    _frame = new LogFrame(this, _("Application log"));
 
-    LogInfo("Приложение создано.\n");
+    LogInfo(_("Application created.\n"));
     _tolker->Speak(L"");
 }
 
@@ -50,11 +55,34 @@ void MainFrame::LogInfo(const wxString& data)
     _frame->AddLog(data);
 }
 
-void MainFrame::OpenGame(std::string name)
+void MainFrame::OpenGame(wxCommandEvent&)
 {
-    //Открываем приложение
+    //РћС‚РєСЂС‹РІР°РµРј РїСЂРёР»РѕР¶РµРЅРёРµ
     //curr_engine->startGame(argv[1]);
-    _engine->startGame(name);
+    //_engine->startGame(name);
+    wxFileDialog
+        openFileDialog(this, _("Open TADS game"), "", "",
+            "TADS files (*.gam)|*.gam", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+    if (openFileDialog.ShowModal() == wxID_CANCEL)
+        return;     // the user changed idea...
+
+    wxFileInputStream input_stream(openFileDialog.GetPath());
+    if (!input_stream.IsOk())
+    {
+        wxLogError("Cannot open file '%s'.", openFileDialog.GetPath());
+        return;
+    }
+    OpenAndRunGame(openFileDialog.GetPath());
+}
+
+void MainFrame::OpenAndRunGame(std::string path)
+{
+    if (_engine->isPlaying())
+    {
+        _engine->stopGame();
+        _player->stop_all_sound();
+    }
+    _engine->startGame(path);
 }
 
 void MainFrame::ClearOutText()
@@ -104,7 +132,7 @@ void MainFrame::OnClose(wxCloseEvent& event)
 
 void MainFrame::OnAbout(wxCommandEvent& event)
 {
-    wxMessageBox("Это wxWidgets' пример Hello world", "О программе",
+    wxMessageBox(_("Universal text games interpreter"), _("About"),
         wxOK | wxICON_INFORMATION);
 }
 

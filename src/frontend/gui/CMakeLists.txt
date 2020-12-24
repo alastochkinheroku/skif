@@ -17,9 +17,9 @@ set(SOURCES main.cpp
 )
 
 set(HEADERS mainframe.h
-centralpanel.h
-parserlineinput.h
-logframe.h
+ centralpanel.h
+ parserlineinput.h
+ logframe.h
 )
 
 add_executable (${PROJECT_NAME} WIN32 ${SOURCES} ${HEADERS})

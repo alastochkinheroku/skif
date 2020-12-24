@@ -12,6 +12,8 @@ namespace core
         virtual void play_sound(int layer, std::string title, char* data, size_t data_size, bool repeat, int volume) = 0;
         //остановить звук в заданном слое
         virtual void stop_sound(int layer) = 0;
+        //остановить весь звук
+        virtual void stop_all_sound() = 0;
     };
 
     //Уведомление о событии вывода движка, как правило из отдельного потока

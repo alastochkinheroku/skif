@@ -12,6 +12,7 @@ public:
     void init(); //инициализация движка
 	void play_sound(int layer, std::string title, char* data, size_t data_size, bool repeat, int volume);
 	void stop_sound(int layer);
+	void stop_all_sound();
 private:
 	const bool _is_server;
 	const std::string _port;

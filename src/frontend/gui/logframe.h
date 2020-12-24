@@ -6,7 +6,7 @@
 #include <wx/wx.h>
 #endif
 
-//Окно логирования
+//РћРєРЅРѕ Р»РѕРіРёСЂРѕРІР°РЅРёСЏ
 class LogFrame : public wxDialog
 {
 public:
