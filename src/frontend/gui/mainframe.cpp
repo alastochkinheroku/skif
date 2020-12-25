@@ -1,14 +1,16 @@
 #include "mainframe.h"
 #include <wx/filedlg.h>
 #include <wx/wfstream.h>
+#include <wx/fileconf.h>
 
 //Идентификаторы для команд
-enum { ID_ShowLog = 1, ID_OpenGame };
+enum { ID_ShowLog = 1, ID_OpenGame, ID_OpenSettings };
 
 // clang-format off
 wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
 EVT_MENU(ID_ShowLog, MainFrame::OnShowLog)
 EVT_MENU(ID_OpenGame, MainFrame::OpenGame)
+EVT_MENU(ID_OpenSettings, MainFrame::OpenSettings)
 EVT_MENU(wxID_EXIT, MainFrame::OnExit)
 EVT_MENU(wxID_ABOUT, MainFrame::OnAbout)
 EVT_CLOSE(MainFrame::OnClose)
@@ -23,16 +25,19 @@ MainFrame::MainFrame(std::shared_ptr<core::TextGameEngine> engine,
     : wxFrame(NULL, wxID_ANY, title, pos, size),
     _engine(engine),
     _tolker(tolker),
-    _player(player)
+    _player(player),
+    _conf_file_name("skif_config.ini"),
+    _enable_tolk(true)
 {
     wxMenu* menuFile = new wxMenu();
     menuFile->Append(ID_OpenGame, _("&Open\tCtrl-O"));
     menuFile->Append(ID_ShowLog, _("&Log\tCtrl-L"));
+    menuFile->Append(ID_OpenSettings, _("&Settings\tCtrl-S"));
     menuFile->AppendSeparator();
-    menuFile->Append(wxID_EXIT);
+    menuFile->Append(wxID_EXIT, _("&Quit"));
 
     wxMenu* menuHelp = new wxMenu();
-    menuHelp->Append(wxID_ABOUT);
+    menuHelp->Append(wxID_ABOUT, _("&About"));
 
     wxMenuBar* menuBar = new wxMenuBar();
     menuBar->Append(menuFile, _("&File"));
@@ -47,6 +52,9 @@ MainFrame::MainFrame(std::shared_ptr<core::TextGameEngine> engine,
     _frame = new LogFrame(this, _("Application log"));
 
     LogInfo(_("Application created.\n"));
+    //применяем конфиг
+    applySettings(getOrCreateConfig());
+
     _tolker->Speak(L"");
 }
 
@@ -75,6 +83,77 @@ void MainFrame::OpenGame(wxCommandEvent&)
     OpenAndRunGame(openFileDialog.GetPath());
 }
 
+void MainFrame::OpenSettings(wxCommandEvent& event)
+{
+    ConfigSettings sets(getOrCreateConfig());
+    SettingsDialog* dlg = new SettingsDialog(sets,this,0,_("Settings"));
+    if (dlg->ShowModal() == wxID_OK)
+    {
+        ConfigSettings newSets(dlg->newSettings());
+        applySettings(newSets);
+        saveSettingsToFile(newSets);
+    }
+    //else: dialog was cancelled or some another button pressed
+    dlg->Destroy();
+}
+
+bool MainFrame::haveConfigFile() const
+{
+    return (wxFileConfig(_("SKIF_APP"), _("VENDOR"), _conf_file_name, wxEmptyString, wxCONFIG_USE_LOCAL_FILE).GetNumberOfEntries() > 0);
+}
+
+bool MainFrame::readFromConfigFile(ConfigSettings& sets) const
+{
+    wxFileConfig config(_("SKIF_APP"),_("VENDOR"), _conf_file_name, wxEmptyString, wxCONFIG_USE_LOCAL_FILE);
+    ConfigSettings new_sets;
+    //TODO: сделать элегантнее
+    if (!config.Read("use_screenreader", &new_sets.use_screenreader))
+    {
+        wxLogError(_("Couldn't read use_screenreader value from config."));
+        return false;
+    }
+    
+    sets = new_sets;
+    return true;
+}
+
+ConfigSettings MainFrame::getOrCreateConfig() const
+{
+    ConfigSettings sets(defaultSettings());
+    //if file exist, parse
+    if (haveConfigFile())
+    {
+        readFromConfigFile(sets);
+    }
+    //else create and save default settings
+    return sets;
+}
+
+ConfigSettings MainFrame::defaultSettings() const
+{
+    ConfigSettings sets;
+    sets.use_screenreader = true;
+    //add default settings
+    return sets;
+}
+
+void MainFrame::applySettings(const ConfigSettings& sets)
+{
+    _enable_tolk = sets.use_screenreader;
+    if (!_enable_tolk)
+    {
+        if (_tolker->IsSpeaking()) _tolker->Silence();
+    }
+}
+
+void MainFrame::saveSettingsToFile(const ConfigSettings& sets)
+{
+    wxFileConfig config(_("SKIF_APP"), _("VENDOR"), _conf_file_name,wxEmptyString,wxCONFIG_USE_LOCAL_FILE);
+    config.EnableAutoSave();
+    config.Write("use_screenreader", sets.use_screenreader);
+    config.Flush();
+}
+
 void MainFrame::OpenAndRunGame(std::string path)
 {
     if (_engine->isPlaying())
@@ -96,7 +175,7 @@ void MainFrame::DisplayOutText(std::string text)
     //in RELEASE???
     wxString decoded_string(text.c_str(), wxCSConv(wxT("cp-1251")));
     _panel->getOutCtrl()->AppendText(decoded_string);
-    if (decoded_string.Trim().size() > 0)
+    if (_enable_tolk && decoded_string.Trim().size() > 0)
     {
         _tolker->Speak(decoded_string.data());
         //LogInfo("Ok tolk? "+std::to_string(ok) + " :" + decoded_string + "\n");
@@ -132,7 +211,8 @@ void MainFrame::OnClose(wxCloseEvent& event)
 
 void MainFrame::OnAbout(wxCommandEvent& event)
 {
-    wxMessageBox(_("Universal text games interpreter"), _("About"),
+    wxString currReader(_tolker->DetectScreenReader());
+    wxMessageBox(_("Universal text games interpreter. \n Current screen reader: ")+ currReader, _("About"),
         wxOK | wxICON_INFORMATION);
 }
 

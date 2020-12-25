@@ -111,8 +111,7 @@ public:
 		{
 			frame->ClearOutText();
 
-			frame->DisplayOutText(_("Open game file."));
-			//frame->OpenGame("cloakofd.gam");
+			frame->DisplayOutText(_("Open TADS game file from menu."));
 		}
 		else
 		{
